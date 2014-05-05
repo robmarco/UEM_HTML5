@@ -6,12 +6,58 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
+        <title>UEM | Roberto Marco WebApp</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/custom.css">
         <script src="bower_components/modernizr/modernizr.js"></script>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&sensor=false"></script>
+
+        <script id="page-country-list" type="text/template">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <h2 class="text-center">Select a region</h2>
+                <select id="region" class="form-control">
+                  <option>Africa</option>
+                  <option>Americas</option>
+                  <option>Asia</option>
+                  <option>Europe</option>
+                  <option>Oceania</option>
+                </select>
+
+                <hr>
+
+                <div id="countries" class="list-group"></div>
+
+              </div>
+            </div>
+          </div>
+        </script>
+
+        <script id="page-country" type="text/template">
+          <div class="container">
+            <div class="row">          
+              <div class="col-xs-4">Name:</div>
+              <div class="col-xs-8"><b><%= name %></b></div>
+
+              <div class="col-xs-4">Capital: </div>
+              <div class="col-xs-8"><b><%= capital %></b></div>
+
+              <div class="col-xs-4">Population: </div>
+              <div class="col-xs-8"><b><%= population %></b></div>
+            </div>            
+
+            <hr >
+
+            <div class="row">
+              <div class="col-xs-12">
+                <iframe src="http://maps.google.com/?q=<%= latlng[0] %>,<%=latlng[1] %>&output=embed" frameBorder="0"></iframe>
+              </div> 
+            </div>
+          </div>
+        </script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -24,44 +70,88 @@
         <div class="container">          
           <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
-              <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">ClickChic</a>
-              </div>
-              <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                  <li class="active"><a href="#">Inicio</a></li>
-                  <li><a href="#">Productos</a></li>
-                  <li><a href="#">Tiendas</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                  <li><a href="#">Regístrate</a></li>
-                  <li><a href="#">Entrar</a></li>
-                </ul>
-              </div>
+              <div class="navbar-header">                
+                <a id="brand" class="navbar-brand" href="#">ClickChic</a>
+              </div>              
             </div>
           </div>
         </div>
       </div>
       
-      <!-- MAIN CONTAINER 
+      <!-- VIEWS CONTAINER
       ================================================== -->
-      <div class="container">
-
-        <div class="starter-template">
-          <h1>Bootstrap starter template</h1>
-          <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-        </div>
-
+      <div id="views">
       </div>
-
+     
+      <!-- LOADING SCRIPTS
+      ================================================== -->
       <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
       <script>window.jQuery || document.write('<script src="bower_components/jquery/dist/jquery.min.js"><\/script>')</script>
-      <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+      <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>   
+      <script src="bower_components/underscore/underscore.js"></script>
+      
+
+      <script>
+        $(function(){
+          $(window).on("hashchange", function(event) {
+            var hash = document.location.hash;            
+
+            if (/country/.test(hash)) {
+              
+              var country_code = hash.split("-")[1];
+
+              $.ajax({
+                url: "http://restcountries.eu/rest/v1/callingcode/" + country_code,
+                type: "GET",
+                dataType: "json",
+                success: function(data, textStatus, xhr) {
+                  console.log(data);
+                  country = data[0];
+                  var compiled = _.template($("#page-country").html());
+                  $("#views").html(compiled(country));
+
+                  $("#brand").text("Back");
+                }
+              });
+
+            } else {
+
+              // Inflate country-list into views before ajax request because 
+              //  we need to populate the selected option
+              var compiled = _.template($("#page-country-list").html());
+              $("#views").html(compiled());
+
+              $("#brand").text("Countries")
+
+              $("select#region")
+                .change(function(){
+                  var region = $("select#region option:selected").text();          
+                  $.ajax({
+                    url: "http://restcountries.eu/rest/v1/region/" + region,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data,textStatus, xhr) {                      
+                      console.log("Region selected: " + region);
+                      console.log(data);
+
+                      $("#countries").empty();
+
+                      var countries_selector = $("div#countries");
+                      _.each(data, function(country){                        
+                        var code = country.callingCodes;
+                        var name = country.name;
+                        countries_selector.append("<a href='#country-"+ code + "' class='list-group-item'>"+ name +"</a>");  
+                      });
+                    }
+                  });
+                })
+                .change();
+            }
+          });
+          $(window).trigger("hashchange");        
+        });
+        
+      </script>
+      
     </body>
 </html>
