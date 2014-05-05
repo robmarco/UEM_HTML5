@@ -1,0 +1,22 @@
+{
+  "name": "P2",
+  "version": "0.0.0",
+  "homepage": "https://github.com/robmarco/UEM_HTML5",
+  "authors": [
+    "Roberto Marco <robmarco@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "bootstrap": "~3.1.1",
+    "underscore": "~1.6.0",
+    "modernizr": "~2.8.1"
+  }
+}
