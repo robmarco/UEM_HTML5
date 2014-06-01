@@ -1,0 +1,33 @@
+<div class="row" ng-swipe-left="swipeLeftAction()">
+	<div class="col-sm-12">
+		<a href="#/" class="btn btn-primary pull-left">Atrás</a>
+		<h2 style="padding-top:40px;" class="text-center">{{model.character.name}}</h2>
+		<hr />
+		<a href="#" class="thumbnail">
+      		<img  src="{{model.urlImage}}" alt="{{character.name}}">
+    	</a>
+
+    	<ul class="list-group">
+			<li class="list-group-item">
+				<span class="badge">{{model.comics.available}}</span>
+			    Comics
+			</li>
+
+			<li class="list-group-item">
+				<span class="badge">{{model.series.available}}</span>
+			    Series
+			</li>
+
+			<li class="list-group-item">
+				<span class="badge">{{model.stories.available}}</span>
+			    Stories
+			</li>
+
+			<li class="list-group-item">
+				<span class="badge">{{model.events.available}}</span>
+			    Events
+			</li>
+		</ul>
+	</div>
+</div>
+

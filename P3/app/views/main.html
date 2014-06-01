@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-xs-12">
+    <h2 class="text-center">Looking for a hero</h2>
+    <hr>
+    <input type="text" class="form-control" placeholder="Character search" ng-model="query">
+
+    <div id="character-list" class="list-group">
+      <a href="#/show/{{ char.id }}" class="list-group-item" ng-repeat="char in model.characters| filter:query track by $index">
+        <span class="item-arrow glyphicon glyphicon-chevron-right pull-right"></span>
+        <img ng-src="{{char.thumbnail.path}}.{{char.thumbnail.extension}}" ng-if="char.thumbnail != null"class="avatar pull-left" width="30px" height="20px" alt="">
+        <img ng-src="http://resourceworld.com/wp-content/themes/channelpro/images/default-thumb.gif" ng-if="char.thumbnail == null"class="avatar pull-left" width="30px" height="20px" alt="">
+        {{char.name}}
+      </a>
+    </div>
+
+    <p>Show: {{(model.characters | filter:query).length}} of {{model.total}}</p>
+
+    <a class="btn btn-primary btn-block" ng-click="showMore()">Load more heroes</a>
+  </div>
+</div>
