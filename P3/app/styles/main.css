@@ -10,3 +10,7 @@ body {
 	height: auto;
 	width: 100%;
 }
+
+.avatar {
+	margin-right: 10px;
+}
