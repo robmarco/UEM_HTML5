@@ -1,0 +1,45 @@
+<div class="row">
+	<div class="col-xs-12">
+
+		<h2 class="text-center">Ready to Fight!</h2>
+		<hr />
+
+		<div class="row">
+			<div class="col-xs-3"><p class="player text-center"><b>{{ model.userName1 }}</b></p></div>
+			<div class="col-xs-2"><img src="img/player1.png"></div>			
+			<div class="col-xs-1 text-center"><p class="player text-center">VS</p></div>
+			<div class="col-xs-2"><img src="img/player2.png"></div>
+			<div class="col-xs-3"><p class="player text-center"><b>{{ model.userName2 }}</b></p></div>
+		</div>
+	</div>
+</div>
+
+<div class="row board">
+
+	<div class="col-xs-12 alert alert-success" ng-show="winner">
+		<p class="text-center"><b>The Winner is {{ winner }}</b></p>
+	</div>
+
+	<div class="col-xs-12 rows">
+	    <div class="cell col-xs-4 cell-top {{markAt(1)}}" ng-click="play(1)"></div>
+        <div class="cell col-xs-4 cell-top cell-middle {{markAt(2)}}" ng-click="play(2)"></div>
+        <div class="cell col-xs-4 cell-top {{markAt(3)}}" ng-click="play(3)"></div>
+	</div>
+    <div class="col-xs-12 rows">
+        <div class="cell col-xs-4 {{markAt(4)}}" ng-click="play(4)"></div>
+        <div class="cell col-xs-4 cell-middle {{markAt(5)}}" ng-click="play(5)"></div>
+        <div class="cell col-xs-4 {{markAt(6)}}" ng-click="play(6)"></div>
+    </div>
+    <div class="col-xs-12 rows">
+        <div class="cell col-xs-4 cell-bottom {{markAt(7)}}" ng-click="play(7)"></div>
+        <div class="cell col-xs-4 cell-bottom cell-middle {{markAt(8)}}" ng-click="play(8)"></div>
+        <div class="cell col-xs-4 cell-bottom {{markAt(9)}}" ng-click="play(9)"></div>
+    </div>
+
+	<div class="clearfix"></div>
+    <button class="btn btn-primary btn-block btn-restart" ng-click="newGame()">Restart the game</button>
+</div>
+
+
+
+

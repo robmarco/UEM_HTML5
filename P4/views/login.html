@@ -1,0 +1,27 @@
+<div class="row">
+	<div class="col-xs-12">
+		<h1 class="text-center">Tic Tac Toe</h1>
+		<hr />
+
+		<h3>Game mode</h3>
+
+		<div class="form-group">
+			<select class="form-control" ng-model="model.gameType">
+			  <option value="1P">One player</option>
+			  <option value="2P">Two players</option>		 
+			</select>
+		</div>
+		
+		<hr />
+
+		<div class="form-group">
+			<input type="text" placeholder="Player 1" class="form-control" ng-model="model.userName1">
+		</div>
+		
+		<div class="form-group">
+			<input type="text" placeholder="Player 2" class="form-control" ng-model="model.userName2" ng-if="model.gameType == '2P'">
+		</div>
+		
+		<a href="#/play" class="btn btn-primary btn-block" id="play-btn" ng-click="play()" ng-disabled="isPlayDisabled()">Play</a>
+	</div>
+</div>

@@ -1,0 +1,61 @@
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+#play-btn {
+	margin-top:30px;
+}
+
+.player {
+	padding-top: 8px;
+}
+
+.board {
+	margin-top: 30px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.cell {
+	display: block;
+	padding-top: 30%;
+	border: 1px solid;
+	border-color: gray;
+}
+
+.cell-middle {
+	border-left: 0px;
+	border-right: 0px;
+}
+
+.cell-top {
+    border-bottom: 0px;
+}
+
+.cell-bottom {
+    border-top: 0px;
+}
+
+.btn-restart {
+	margin-top: 40px;
+}
+
+.player1 {
+    background-color: red;
+}
+
+.player2 {
+    background-color: blue;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
